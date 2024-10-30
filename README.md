@@ -78,7 +78,7 @@ Tests
 
 To run the test suite, use the following command:
 ```bash
-python -m unittest discover ./test_anomalyze.py
+python -m unittest discover .
 ```
 
 Requirements
