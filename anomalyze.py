@@ -21,14 +21,19 @@ class Filter:
 
     def filter_anomalies(self, data, correlation_matrix):
         filtered_indices = []
-        if correlation_matrix.shape[0] < 2 or correlation_matrix.shape[1] < 2:
-            return filtered_indices  # Пропуск фильтрации для матриц 1x1 или 1xN
+        num_metrics = correlation_matrix.shape[0]
 
-        for i in range(len(data)):
-            for j in range(i + 1, len(data)):
-                if correlation_matrix[i, j] >= self.correlation_threshold:
-                    filtered_indices.append(i if data[i] < data[j] else j)
+        if num_metrics < 2:
+            # Если меньше двух метрик, нет смысла в фильтрации
+            return filtered_indices
+
+        for i in range(num_metrics):
+            for j in range(i + 1, num_metrics):
+                if i < len(data) and j < len(data):  # Проверяем, что индексы в пределах данных
+                    if correlation_matrix[i, j] >= self.correlation_threshold:
+                        filtered_indices.append(i if data[i] < data[j] else j)
         return list(set(filtered_indices))
+
 
 class CorrelationAnalysis:
     def __init__(self, data_i, data_j):
