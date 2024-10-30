@@ -11,7 +11,7 @@ setup(
     description="A comprehensive anomaly detection system for real-time data analysis",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/yourusername/anomalyze",
+    url="https://github.com/Pratar/anomalyze",
     packages=find_packages(),
     install_requires=[
         "numpy>=1.18.2",

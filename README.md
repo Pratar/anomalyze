@@ -80,7 +80,7 @@ Tests
 
 To run the test suite, use the following command:
 ```bash
-python -m unittest discover .
+python -m unittest discover tests
 ```
 
 Requirements
