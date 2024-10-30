@@ -11,6 +11,50 @@ Anomalyze is a comprehensive anomaly detection system designed for real-time dat
 - **Time Series Forecasting**: Predict future data points to preemptively identify anomalies.
 - **Metric Hierarchy Management**: Organize metrics by criticality (e.g., critical, warning, info) with dynamic reclassification.
 
+## Comparison with seasonal-esd-anomaly-detection (SESD)
+
+This section provides a comparison between this library and **seasonal-esd-anomaly-detection** (SESD) in terms of anomaly detection approach, data processing flexibility, threshold settings, and anomaly detection accuracy. Both libraries offer time series analysis capabilities, but they differ significantly in methodology and feature sets.
+
+### 1. **Anomaly Detection Method**
+
+| Feature                                | This Library                                     | seasonal-esd-anomaly-detection (SESD)           |
+|----------------------------------------|--------------------------------------------------|-------------------------------------------------|
+| **Anomaly Detection**                  | Dynamic thresholds based on history and context  | Seasonal Hybrid ESD with fixed thresholds       |
+| **Correlation Analysis Support**       | Yes                                              | No                                              |
+| **Forecasting Capabilities**           | Yes, using ARIMA model                           | No                                              |
+| **False Positive Filtering**           | Yes, via dynamic thresholds                      | No, thresholds are fixed                        |
+| **Metric Hierarchy**                   | Supported with critical, warning, and info levels| Not available                                   |
+
+### 2. **Analysis Approach and Configuration Flexibility**
+
+- **This Library** uses dynamic thresholds that adapt based on the context (e.g., normal or emergency conditions). This helps detect anomalies while accounting for the current state of the system, minimizing false positives.
+- **SESD** relies on the **Seasonal Hybrid ESD** method for identifying anomalies in data with seasonal components. This approach focuses on detecting anomalies within predictable patterns (e.g., seasonal peaks or troughs) using fixed thresholds.
+
+### 3. **Configuration Flexibility and Adaptability**
+
+- **This Library** offers flexible settings for thresholds, contextual parameters (e.g., time of day, day of the week), and a metric hierarchy to prioritize metrics based on importance. This configuration provides greater flexibility in responding to various types of anomalies.
+- **SESD** is oriented towards scenarios where data has clear seasonal patterns with minimal threshold adjustment requirements. However, this approach limits adaptability under changing conditions.
+
+### 4. **Forecasting Support**
+
+- **This Library** includes prediction capabilities using **ARIMA** time series models, which allows forecasting metric values and identifying potential anomalies before they occur. This approach enables proactive anomaly detection.
+- **SESD** does not support forecasting, which makes it less suited for anomaly prevention and more for retrospective detection.
+
+### 5. **False Positive Filtering**
+
+- **This Library** supports false positive filtering through correlation analysis and dynamic threshold adjustment, reducing redundant alerts and ensuring the detection of meaningful anomalies.
+- **SESD** lacks built-in mechanisms for filtering false positives, which can result in numerous redundant alerts, especially when seasonal patterns are unstable.
+
+### Summary Evaluation
+
+- **This Library** provides a comprehensive approach to anomaly detection, focusing on adaptability and configuration flexibility. It is better suited for systems with changing conditions where reducing false positives and forecasting are crucial.
+- **seasonal-esd-anomaly-detection (SESD)** is a more specialized tool suitable for data with stable seasonal patterns. It can be effective for straightforward scenarios where system and seasonal patterns are stable and do not require dynamic adjustments.
+
+### Recommendations
+
+- For applications requiring precise threshold settings, forecasting, and correlation analysis, this library is preferable.
+- For analyzing stable seasonal data with minimal configuration needs, **SESD** may be beneficial, especially if simplicity and ease of setup are essential.
+
 ## Installation
 
 Install the package using `pip`:
