@@ -1,4 +1,4 @@
-The theoretical foundation and justification for the model are provided in the document anomalies-eng.pdf. This document includes detailed explanations of the principles and methodologies underlying the anomaly detection system, offering a comprehensive understanding of its structural and functional components.
+The theoretical foundation and justification for the model are provided in the document **anomalies-eng.pdf**. This document includes detailed explanations of the principles and methodologies underlying the anomaly detection system, offering a comprehensive understanding of its structural and functional components.
 
 # Anomalyze
 
