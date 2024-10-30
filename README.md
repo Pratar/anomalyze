@@ -13,12 +13,12 @@ Anomalyze is a comprehensive anomaly detection system designed for real-time dat
 
 Install the package using `pip`:
 ```bash
-pip install git+https://github.com/yourusername/anomalyze.git
+pip install git+https://github.com/Pratar/anomalyze.git
 ```
 
 Or install from a local clone:
 ```bash
-git clone https://github.com/yourusername/anomalyze.git
+git clone https://github.com/Pratar/anomalyze.git
 cd anomalyze
 pip install .
 ```
