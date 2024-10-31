@@ -17,7 +17,7 @@ This section provides a comparison between this library and **seasonal-esd-anoma
 
 ### 1. **Anomaly Detection Method**
 
-| Feature                                | This Library                                     | seasonal-esd-anomaly-detection (SESD)           |
+| Feature                                | This Anomalyze                                     | seasonal-esd-anomaly-detection (SESD)           |
 |----------------------------------------|--------------------------------------------------|-------------------------------------------------|
 | **Anomaly Detection**                  | Dynamic thresholds based on history and context  | Seasonal Hybrid ESD with fixed thresholds       |
 | **Correlation Analysis Support**       | Yes                                              | No                                              |
@@ -37,22 +37,22 @@ This section provides a comparison between this library and **seasonal-esd-anoma
 
 ### 4. **Forecasting Support**
 
-- **This Library** includes prediction capabilities using **ARIMA** time series models, which allows forecasting metric values and identifying potential anomalies before they occur. This approach enables proactive anomaly detection.
+- **Anomalyze** includes prediction capabilities using **ARIMA** time series models, which allows forecasting metric values and identifying potential anomalies before they occur. This approach enables proactive anomaly detection.
 - **SESD** does not support forecasting, which makes it less suited for anomaly prevention and more for retrospective detection.
 
 ### 5. **False Positive Filtering**
 
-- **This Library** supports false positive filtering through correlation analysis and dynamic threshold adjustment, reducing redundant alerts and ensuring the detection of meaningful anomalies.
+- **Anomalyze** supports false positive filtering through correlation analysis and dynamic threshold adjustment, reducing redundant alerts and ensuring the detection of meaningful anomalies.
 - **SESD** lacks built-in mechanisms for filtering false positives, which can result in numerous redundant alerts, especially when seasonal patterns are unstable.
 
 ### Summary Evaluation
 
-- **This Library** provides a comprehensive approach to anomaly detection, focusing on adaptability and configuration flexibility. It is better suited for systems with changing conditions where reducing false positives and forecasting are crucial.
+- **Anomalyze** provides a comprehensive approach to anomaly detection, focusing on adaptability and configuration flexibility. It is better suited for systems with changing conditions where reducing false positives and forecasting are crucial.
 - **seasonal-esd-anomaly-detection (SESD)** is a more specialized tool suitable for data with stable seasonal patterns. It can be effective for straightforward scenarios where system and seasonal patterns are stable and do not require dynamic adjustments.
 
 ### Recommendations
 
-- For applications requiring precise threshold settings, forecasting, and correlation analysis, this library is preferable.
+- For applications requiring precise threshold settings, forecasting, and correlation analysis, this Anomalyze is preferable.
 - For analyzing stable seasonal data with minimal configuration needs, **SESD** may be beneficial, especially if simplicity and ease of setup are essential.
 
 ## Installation
