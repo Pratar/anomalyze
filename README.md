@@ -5,9 +5,9 @@ The theoretical foundation and justification for the model are provided in the d
 Anomalyze is a comprehensive anomaly detection system designed for real-time data analysis. Anomalyze provides dynamic thresholding, adaptive filtering, correlation analysis, time series forecasting, and metric hierarchy management to identify and analyze anomalies in complex data streams.
 
 ## Features
-- **Dynamic Thresholding**: Set adaptive thresholds based on historical data and context.
-- **Adaptive Filtering**: Minimize false positives with customizable filtering rules.
-- **Correlation Analysis**: Identify relationships between metrics using Pearson, Spearman, and lagged correlation coefficients.
+- **Dynamic Thresholding**: Set adaptive thresholds based on historical data and context. Detects both positive (spikes) and negative (drops) anomalies.
+- **Adaptive Filtering**: Minimize false positives with customizable filtering rules. Uses "Max Pooling" strategy to retain the most significant anomalies among correlated metrics.
+- **Correlation Analysis**: Identify relationships between metrics using Pearson, Spearman, and robust lagged correlation coefficients (without circular artifacts).
 - **Time Series Forecasting**: Predict future data points to preemptively identify anomalies.
 - **Metric Hierarchy Management**: Organize metrics by criticality (e.g., critical, warning, info) with dynamic reclassification.
 
@@ -74,8 +74,10 @@ Usage:
 import numpy as np
 from anomalyze import FullAnomalyDetectionSystem, MetricHierarchy
 
-# Generate sample data
-data = np.random.random(100) * 50
+# Generate sample data with some anomalies
+data = np.random.normal(50, 5, 100)
+data[20] = 100  # Spike (positive anomaly)
+data[50] = 0    # Drop (negative anomaly)
 
 # Create a metric hierarchy and add a critical metric
 hierarchy = MetricHierarchy()
@@ -91,22 +93,23 @@ results = full_system.process()
 print("Prediction:", results['prediction'])
 print("Correlation Analysis:", results['correlation_analysis'])
 print("Filtered Anomalies:", results['filtered_anomalies'])
-print("Detected Anomalies:", results['anomalies'])
+print("Detected Anomalies (indices):", results['anomalies'])
+# Should detect both index 20 (spike) and 50 (drop)
 ```
 
 Components
 
 1. DynamicThreshold
 
-Calculates adaptive thresholds based on historical data and context, useful for monitoring metrics in changing conditions.
+Calculates adaptive thresholds based on historical data and context. It establishes both upper and lower bounds to detect sudden spikes and drops in metric values.
 
 2. Filter
 
-Minimizes false positives by filtering anomalies based on correlation thresholds and other customizable rules.
+Minimizes false positives by filtering anomalies based on correlation thresholds. When metrics are highly correlated, it retains the most significant anomaly (highest relative magnitude).
 
 3. CorrelationAnalysis
 
-Performs linear and nonlinear correlation analysis, including lagged correlation, to identify metric dependencies.
+Performs linear and nonlinear correlation analysis, including lagged correlation (detecting time-shifted dependencies), to identify metric dependencies.
 
 4. PredictionModel
 
