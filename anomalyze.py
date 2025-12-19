@@ -31,7 +31,8 @@ class Filter:
             for j in range(i + 1, num_metrics):
                 if i < len(data) and j < len(data):  # Проверяем, что индексы в пределах данных
                     if correlation_matrix[i, j] >= self.correlation_threshold:
-                        filtered_indices.append(i if data[i] < data[j] else j)
+                        # Keep the one with higher value (more significant anomaly)
+                        filtered_indices.append(i if data[i] > data[j] else j)
         return list(set(filtered_indices))
 
 
@@ -51,8 +52,14 @@ class CorrelationAnalysis:
     def lagged_correlation(self, lag=1):
         if lag >= len(self.data_j):
             raise ValueError("Lag is greater than the length of the data.")
-        lagged_j = np.roll(self.data_j, lag)
-        correlation, _ = pearsonr(self.data_i[:-lag], lagged_j[:-lag])
+        
+        # Correctly slice arrays for lagged correlation
+        # Compare x[lag:] with y[:-lag]
+        # This aligns x[t] with y[t-lag]
+        y_lagged = self.data_j[:len(self.data_j)-lag]
+        x_trimmed = self.data_i[lag:]
+        
+        correlation, _ = pearsonr(x_trimmed, y_lagged)
         return correlation
 
 
@@ -93,8 +100,14 @@ class AnomalyDetector:
         self.threshold_model = DynamicThreshold(self.data, context, seasonal_adjustment)
 
     def detect_anomalies(self):
-        threshold = self.threshold_model.calculate_threshold()
-        anomalies = np.where(self.data > threshold)[0]
+        threshold_val = self.threshold_model.calculate_threshold()
+        # Calculate deviation from mean to determine lower bound
+        mean = np.mean(self.data)
+        deviation = threshold_val - mean
+        lower_threshold = mean - deviation
+        
+        # Detect anomalies both above and below thresholds
+        anomalies = np.where((self.data > threshold_val) | (self.data < lower_threshold))[0]
         return anomalies
 
 
